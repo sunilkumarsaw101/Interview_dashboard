@@ -36,7 +36,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", middleware.authMiddleware1, async (req, res) => {
+router.put("/:id", middleware.authMiddleware2, async (req, res) => {
   const id = req.params.id;
   //   console.log(id);
 
@@ -51,12 +51,12 @@ router.put("/:id", middleware.authMiddleware1, async (req, res) => {
     const student = await candidateModel.findByIdAndUpdate(id, req.body, {
       new: true,
     }); //here {new: true} is send updated document.
-    res.status(200).json({
+    return res.status(200).json({
       message: "student updated successfully!",
       data: student,
     });
   } else {
-    res.status(401).json({
+   return  res.status(401).json({
       message: "student not found",
     });
   }
