@@ -6,7 +6,7 @@ const middleware = require('../../middleware/authMiddleware');
 
 const router = express.Router();
 
-router.get("/", middleware.authMiddleware1, async (req, res) => {
+router.get("/", middleware.authMiddleware3, async (req, res) => {
   const students = await candidateModel.find({});
   res.status(200).json({
     message: "students fetched successfully",

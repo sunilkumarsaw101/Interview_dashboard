@@ -8,6 +8,7 @@ const express = require("express");
 const { connectMongoDb } = require("./config/mongoose");
 const cookieParser = require("cookie-parser");
 // const candidateModel = require("./model/candidate");
+const passport= require('./config/passportLocalStrategy');
 const PORT = 8000;
 
 //server creation.
@@ -15,12 +16,19 @@ const app = express();
 
 //-------------------------------------
 //....MIDDLEWARES....
+
+//middleware to read cookies from request string.
+app.use(cookieParser());
 //middleware to read the urlencoded data..
 app.use(express.urlencoded());
 //middleware to read json data.
 app.use(express.json());
-//middleware to read cookies from request string.
-app.use(cookieParser());
+
+//middleware to passport 
+app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 //middleware to send all the req to routes folder
 app.use('/', require('./routes'));
 
