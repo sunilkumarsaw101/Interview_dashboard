@@ -2,11 +2,12 @@ const express = require("express");
 const candidateModel = require("../../model/candidate");
 // const { middlware } = require("../../middleware/authMiddleware");
 const middleware = require('../../middleware/authMiddleware');
+const passport = require("../../config/passportJWT");
 // const { authMiddleware1 } = require("../../middleware/authMiddleware");
 
 const router = express.Router();
 
-router.get("/", middleware.authMiddleware3, async (req, res) => {
+router.get("/", passport.authenticate('jwt', {failureRedirect: '/create-session'}), async (req, res) => {
   const students = await candidateModel.find({});
   res.status(200).json({
     message: "students fetched successfully",

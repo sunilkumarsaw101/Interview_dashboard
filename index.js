@@ -8,7 +8,8 @@ const express = require("express");
 const { connectMongoDb } = require("./config/mongoose");
 const cookieParser = require("cookie-parser");
 // const candidateModel = require("./model/candidate");
-const passport= require('./config/passportLocalStrategy');
+// const passport= require('./config/passportLocalStrategy');
+const passportJWT= require('./config/passportJWT');
 const PORT = 8000;
 
 //server creation.
@@ -24,10 +25,13 @@ app.use(express.urlencoded());
 //middleware to read json data.
 app.use(express.json());
 
-//middleware to passport 
-app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
+//middleware to passport local
+// app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+// app.use(passport.initialize());
+// app.use(passport.session());
+
+//middleware to passport jwt.
+app.use(passportJWT.initialize());
 
 //middleware to send all the req to routes folder
 app.use('/', require('./routes'));
